@@ -617,6 +617,12 @@
     };
     const names = {"monday-tab":"Monday","tuesday-tab":"Tuesday","wednesday-tab":"Wednesday"};
 
+    // Declared up front so refreshFilters() (called during the very first selectDay below)
+    // can safely reference it — it previously lived further down the script, which threw
+    // a "Cannot access 'activeTrack' before initialization" error.
+    const filterChips = [...document.querySelectorAll(".track-chip")];
+    let activeTrack = "all";
+
     function paintTab(tab, selected) {
       tab.style.setProperty("background", selected ? "#ef6c22" : "#17231d", "important");
       tab.style.setProperty("background-color", selected ? "#ef6c22" : "#17231d", "important");
@@ -725,8 +731,6 @@
     setInterval(updateHappeningNow, 60000);
 
     // --- Track filter chips ---
-    const filterChips = [...document.querySelectorAll(".track-chip")];
-    let activeTrack = "all";
 
     function refreshFilters() {
       document.querySelectorAll(".session-card").forEach(card => {
