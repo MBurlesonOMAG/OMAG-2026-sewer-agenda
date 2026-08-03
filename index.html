@@ -8,12 +8,14 @@
 
   <!-- NOTE: only three external dependencies now: Tailwind (utility classes), -->
   <!-- Google Fonts (Fraunces + Work Sans), and Lucide (icons, bumped to a current version). -->
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <style>
+*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.mx-auto{margin-left:auto;margin-right:auto}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-7{margin-bottom:1.75rem}.mb-8{margin-bottom:2rem}.ml-1{margin-left:.25rem}.mt-1{margin-top:.25rem}.mt-10{margin-top:2.5rem}.mt-2{margin-top:.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-32{height:8rem}.h-4{height:1rem}.h-5{height:1.25rem}.w-32{width:8rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-full{width:100%}.max-w-6xl{max-width:72rem}.max-w-\[160px\]{max-width:160px}.max-w-\[180px\]{max-width:180px}.max-w-xl{max-width:36rem}.flex-shrink-0{flex-shrink:0}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.justify-between{justify-content:space-between}.gap-2{gap:.5rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-\[\#d8d4ca\]{--tw-border-opacity:1;border-color:rgb(216 212 202/var(--tw-border-opacity,1))}.border-black\/10{border-color:rgba(0,0,0,.1)}.object-contain{-o-object-fit:contain;object-fit:contain}.object-cover{-o-object-fit:cover;object-fit:cover}.p-5{padding:1.25rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-7{padding-top:1.75rem;padding-bottom:1.75rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-4{padding-bottom:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-wider{letter-spacing:.05em}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.outline{outline-style:solid}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}@media (min-width:640px){.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-start{align-items:flex-start}.sm\:items-center{align-items:center}.sm\:justify-between{justify-content:space-between}.sm\:px-8{padding-left:2rem;padding-right:2rem}.sm\:py-10{padding-top:2.5rem;padding-bottom:2.5rem}.sm\:text-right{text-align:right}}
+  </style>
   <style>
     :root {
       --ink:#17231d; --cream:#f3eddf; --paper:#ffffff; --orange:#ef6c22;
@@ -113,14 +115,14 @@
 
         <nav class="day-navigation mb-5" aria-label="Choose an agenda day">
           <div class="grid gap-2 sm:grid-cols-3" role="tablist">
-            <button id="monday-tab" type="button" role="tab" aria-selected="false" aria-controls="monday-panel" tabindex="-1" class="day-tab rounded-lg px-4 py-3 font-bold" style="background:#17231d;color:#fff;">Monday</button>
-            <button id="tuesday-tab" type="button" role="tab" aria-selected="true" aria-controls="tuesday-panel" class="day-tab rounded-lg px-4 py-3 font-bold" style="background:#17231d;color:#fff;">Tuesday</button>
+            <button id="monday-tab" type="button" role="tab" aria-selected="true" aria-controls="monday-panel" class="day-tab rounded-lg px-4 py-3 font-bold" style="background:#17231d;color:#fff;">Monday</button>
+            <button id="tuesday-tab" type="button" role="tab" aria-selected="false" aria-controls="tuesday-panel" tabindex="-1" class="day-tab rounded-lg px-4 py-3 font-bold" style="background:#17231d;color:#fff;">Tuesday</button>
             <button id="wednesday-tab" type="button" role="tab" aria-selected="false" aria-controls="wednesday-panel" tabindex="-1" class="day-tab rounded-lg px-4 py-3 font-bold" style="background:#17231d;color:#fff;">Wednesday</button>
           </div>
         </nav>
-        <p class="day-status mb-7 text-sm" aria-live="polite"><i data-lucide="calendar-days" class="h-4 w-4"></i><span id="active-day-status">Tuesday schedule displayed</span></p>
+        <p class="day-status mb-7 text-sm" aria-live="polite"><i data-lucide="calendar-days" class="h-4 w-4"></i><span id="active-day-status">Monday schedule displayed</span></p>
 
-        <section id="monday-panel" class="day-panel hidden" role="tabpanel" aria-labelledby="monday-tab">
+        <section id="monday-panel" class="day-panel" role="tabpanel" aria-labelledby="monday-tab">
           <header class="mb-7 border-b border-black/10 pb-4">
             <h2 class="display-font mt-1" style="color:#17231d;font-size:32px;">October 12, 2026</h2>
           </header>
@@ -168,7 +170,7 @@
           </div>
         </section>
 
-        <section id="tuesday-panel" class="day-panel" role="tabpanel" aria-labelledby="tuesday-tab">
+        <section id="tuesday-panel" class="day-panel hidden" role="tabpanel" aria-labelledby="tuesday-tab">
           <header class="mb-7 border-b border-black/10 pb-4">
             <h2 class="display-font mt-1" style="color:#17231d;font-size:32px;">October 13, 2026</h2>
           </header>
@@ -576,6 +578,24 @@
     }
 
     tabs.forEach(tab => paintTab(tab, tab.getAttribute("aria-selected") === "true"));
+
+    // Auto-select the relevant day based on today's date:
+    // - Before Oct 12, 2026: defaults to Monday (already the markup default, set above)
+    // - Oct 12 / 13 / 14, 2026: jumps straight to that day's panel
+    // - After Oct 14, 2026 (event over): falls back to Wednesday, the final day
+    function pickDefaultDayId() {
+      const today = new Date();
+      const y = today.getFullYear(), m = today.getMonth(), d = today.getDate();
+      const asNum = y * 10000 + (m + 1) * 100 + d; // e.g. 20261013
+      if (asNum < 20261012) return "monday-tab";
+      if (asNum === 20261012) return "monday-tab";
+      if (asNum === 20261013) return "tuesday-tab";
+      if (asNum === 20261014) return "wednesday-tab";
+      return "wednesday-tab"; // after the event has ended
+    }
+
+    const defaultTab = document.getElementById(pickDefaultDayId());
+    if (defaultTab) selectDay(defaultTab);
 
     function selectDay(selectedTab) {
       tabs.forEach(tab => {
