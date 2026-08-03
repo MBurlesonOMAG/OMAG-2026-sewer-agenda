@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>2026 OMAG Sewer Expo Agenda</title>
   <meta name="description" content="Full agenda for the 2026 OMAG Sanitary Sewer Expo, October 12-14, 2026 at Stride Bank Center in Enid, Oklahoma.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%2317231d'/%3E%3Cpath d='M16 6c4 6 8 10.5 8 14.5A8 8 0 1 1 8 20.5C8 16.5 12 12 16 6Z' fill='%23ef6c22'/%3E%3C/svg%3E">
+  <meta property="og:title" content="2026 OMAG Sanitary Sewer Expo Agenda">
+  <meta property="og:description" content="October 12-14, 2026 - Stride Bank Center, Enid, Oklahoma. Full three-day session schedule.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/MBurlesonOMAG/OMAG-2026-sewer-agenda/main/images/Sewer%20Expo%20Logo%20-%20white.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2026 OMAG Sanitary Sewer Expo Agenda">
+  <meta name="twitter:description" content="October 12-14, 2026 - Stride Bank Center, Enid, Oklahoma.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/MBurlesonOMAG/OMAG-2026-sewer-agenda/main/images/Sewer%20Expo%20Logo%20-%20white.png">
 
   <!-- NOTE: only three external dependencies now: Tailwind (utility classes), -->
   <!-- Google Fonts (Fraunces + Work Sans), and Lucide (icons, bumped to a current version). -->
@@ -55,6 +64,31 @@
     .day-status{display:inline-flex;align-items:center;gap:.45rem;color:var(--muted)}
     .logo-placeholder{display:flex;align-items:center;justify-content:center;height:60px;width:160px;border:1px dashed rgba(255,255,255,.4);border-radius:8px;color:rgba(255,255,255,.7);font-size:.7rem;text-align:center;padding:.25rem}
     .speaker-placeholder{display:flex;align-items:center;justify-content:center;height:8rem;width:8rem;border-radius:.75rem;background:#e8eee9;color:var(--muted);font-size:.7rem;text-align:center;padding:.5rem;flex-shrink:0}
+
+    /* Sticky day tabs: stays pinned to the top of the viewport once scrolled past */
+    .day-navigation{position:sticky;top:0;z-index:30;background:rgb(238,240,237);padding:.65rem 0;margin-left:-5px;margin-right:-5px;padding-left:5px;padding-right:5px}
+    .day-navigation.is-stuck{box-shadow:0 6px 14px rgba(23,35,29,.08);border-bottom:1px solid var(--line)}
+
+    /* Track filter chips */
+    .track-filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+    .track-chip{border:1.5px solid var(--line);background:#fff;color:var(--ink);font-weight:700;font-size:.8rem;padding:.4rem .9rem;border-radius:999px;cursor:pointer;transition:.15s ease}
+    .track-chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+    .track-chip:hover{transform:translateY(-1px)}
+
+    /* Happening-now highlight */
+    .time-group.is-now .time-label:before{background:#e11d1d;box-shadow:0 0 0 4px rgba(225,29,29,.18)}
+    .time-group.is-now .session-grid{outline:2px solid #e11d1d;outline-offset:6px;border-radius:14px}
+    .live-now-badge{display:inline-flex;align-items:center;gap:.3rem;background:#e11d1d;color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.15rem .55rem;border-radius:999px;margin-left:.6rem}
+    .live-now-badge:before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse-dot 1.4s ease-in-out infinite}
+    @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
+
+    /* Expand/collapse-all + calendar buttons */
+    .toolbar-btn{border:1.5px solid var(--line);background:#fff;color:var(--ink);font-weight:700;font-size:.8rem;padding:.4rem .9rem;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem}
+    .toolbar-btn:hover{background:#f3eddf}
+    .ics-btn{border:1px solid var(--line);background:#fff;color:var(--muted);font-size:.72rem;font-weight:600;padding:.3rem .6rem;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:.3rem;margin-top:.6rem}
+    .ics-btn:hover{background:#f3eddf;color:var(--ink)}
+    .session-card.is-filtered-out{display:none}
+
     @media(max-width:540px){
       .time-group{padding-left:1.15rem}
       .time-label:before{left:-1.14rem}
@@ -63,10 +97,10 @@
     @media print{
       body,.app-wrapper{background:#fff!important}
       header{padding:1rem!important}
-      .day-navigation,.day-status,footer{display:none!important}
+      .day-navigation,.day-status,footer,.track-filters,.day-toolbar,.ics-btn{display:none!important}
       main{max-width:none!important;padding:1rem!important}
       .day-panel{display:block!important;margin-bottom:2rem}
-      .session-card{break-inside:avoid;box-shadow:none}
+      .session-card{break-inside:avoid;box-shadow:none;display:block!important}
       .session-card .session-detail{display:block!important}
       .chevron{display:none!important}
     }
@@ -113,6 +147,7 @@
           <h2 id="agenda-heading" class="display-font mt-1" style="color:#17231d;font-size:38px;">Choose a day</h2>
         </div>
 
+        <div id="nav-sentinel"></div>
         <nav class="day-navigation mb-5" aria-label="Choose an agenda day">
           <div class="grid gap-2 sm:grid-cols-3" role="tablist">
             <button id="monday-tab" type="button" role="tab" aria-selected="true" aria-controls="monday-panel" class="day-tab rounded-lg px-4 py-3 font-bold" style="background:#17231d;color:#fff;">Monday</button>
@@ -122,13 +157,25 @@
         </nav>
         <p class="day-status mb-7 text-sm" aria-live="polite"><i data-lucide="calendar-days" class="h-4 w-4"></i><span id="active-day-status">Monday schedule displayed</span></p>
 
+        <div class="track-filters" role="group" aria-label="Filter sessions by track">
+          <button type="button" class="track-chip" data-track="all" aria-pressed="true">All Tracks</button>
+          <button type="button" class="track-chip" data-track="ML" aria-pressed="false">ML - Municipal Leadership</button>
+          <button type="button" class="track-chip" data-track="UM" aria-pressed="false">UM - Utility Management</button>
+          <button type="button" class="track-chip" data-track="FO" aria-pressed="false">FO - Field Operations</button>
+        </div>
+
+        <div class="day-toolbar mb-6 flex flex-wrap gap-2">
+          <button type="button" id="expand-all-btn" class="toolbar-btn"><i data-lucide="maximize-2" class="h-3.5 w-3.5"></i><span>Expand all</span></button>
+          <button type="button" id="collapse-all-btn" class="toolbar-btn"><i data-lucide="minimize-2" class="h-3.5 w-3.5"></i><span>Collapse all</span></button>
+        </div>
+
         <section id="monday-panel" class="day-panel" role="tabpanel" aria-labelledby="monday-tab">
           <header class="mb-7 border-b border-black/10 pb-4">
             <h2 class="display-font mt-1" style="color:#17231d;font-size:32px;">October 12, 2026</h2>
           </header>
           <div class="agenda-list">
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:16px;">7:00 AM–9:30 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:16px;" data-start="2026-10-12T07:00:00" data-end="2026-10-12T09:30:00">7:00 AM–9:30 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:#000;color:#fff;">Setup</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Heavy Equipment Move-In</span><span class="mt-1 block" style="color:#5d675f;">Vendor Hall</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -138,7 +185,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:16px;">7:30 AM–3:00 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:16px;" data-start="2026-10-12T07:30:00" data-end="2026-10-12T15:00:00">7:30 AM–3:00 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:#000;color:#fff;">Setup</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Vendor Hall Setup</span><span class="mt-1 block" style="color:#5d675f;">Vendor Hall</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -148,7 +195,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:16px;">3:45 PM–5:00 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:16px;" data-start="2026-10-12T15:45:00" data-end="2026-10-12T17:00:00">3:45 PM–5:00 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:#000;color:#fff;">Registration</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Pre-Registration</span><span class="mt-1 block" style="color:#5d675f;">Stride Bank Center</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -158,7 +205,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:16px;">4:00 PM–8:00 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:16px;" data-start="2026-10-12T16:00:00" data-end="2026-10-12T20:00:00">4:00 PM–8:00 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Networking / Special Event</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Cornhole Tournament</span><span class="mt-1 block" style="color:#5d675f;">Stride Bank Center</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -176,7 +223,7 @@
           </header>
           <div class="agenda-list">
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">7:00 AM–8:00 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T07:00:00" data-end="2026-10-13T08:00:00">7:00 AM–8:00 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="block font-bold" style="color:#17231d;font-size:20px;">Registration</span><span class="mt-1 block" style="color:#5d675f;">No speaker · Location TBD</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -186,7 +233,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">8:00 AM–8:15 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T08:00:00" data-end="2026-10-13T08:15:00">8:00 AM–8:15 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Welcome, Introduction, and DEQ Credit Information</span><span class="mt-1 block" style="color:#5d675f;">William Sheppard · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -196,7 +243,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">8:15 AM–9:15 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T08:15:00" data-end="2026-10-13T09:15:00">8:15 AM–9:15 AM</p>
               <div class="session-grid">
                 <details class="session-card" open><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Keynote Address</span><span class="mt-1 block" style="color:#5d675f;">Leo Flowers · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -211,7 +258,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">9:15 AM–10:15 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T09:15:00" data-end="2026-10-13T10:15:00">9:15 AM–10:15 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(120,169,67);color:#fff;">Vendor Break</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Vendor Hall Grand Opening</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -221,15 +268,15 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">9:45 AM–10:35 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T09:45:00" data-end="2026-10-13T10:35:00">9:45 AM–10:35 AM</p>
               <span class="activity-pill mb-3" style="background:rgb(255,49,49);color:#fff;font-size:14px;">Bonus sessions for the 12-hour DEQ credit track.</span>
               <div class="session-grid">
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Navigating Infrastructure Funding: A Comprehensive Overview of Financing Options for Public Utilities</span><span class="mt-1 block" style="color:#5d675f;">Charles de Coune and Jared Cooper · 2nd Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">An overview of funding opportunities available to public utilities, including general obligation bonds, revenue bonds, public-private partnerships, tax increment financing, government loans, direct bank loans, BUILD Act funding, and other financing options.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Condition-Based Maintenance for Sanitary Sewer Systems: Why Clean a Clean Sewer Line?</span><span class="mt-1 block" style="color:#5d675f;">Walt Woodard · 4th Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Learn how acoustic inspection technology can rapidly assess sanitary sewer lines. A complete inspection can be performed in approximately 80 seconds, helping utilities direct cleaning and maintenance resources where they are most needed.</p></div>
@@ -237,7 +284,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">10:20 AM–10:40 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T10:20:00" data-end="2026-10-13T10:40:00">10:20 AM–10:40 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Priority Session To Be Announced</span><span class="mt-1 block" style="color:#5d675f;">Speaker To Be Announced · Location TBD</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -247,7 +294,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">10:40 AM–11:30 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T10:40:00" data-end="2026-10-13T11:30:00">10:40 AM–11:30 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">OMAG F.I.G.H.T.</span><span class="mt-1 block" style="color:#5d675f;">Sean McKelvey · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -257,7 +304,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">11:30 AM–12:30 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T11:30:00" data-end="2026-10-13T12:30:00">11:30 AM–12:30 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(120,169,67);color:#fff;">LUNCH</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Lunch in the Vendor Hall</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -267,7 +314,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">12:30 PM–1:00 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T12:30:00" data-end="2026-10-13T13:00:00">12:30 PM–1:00 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(120,169,67);color:#fff;">Vendor Break</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Vendor Hall Break</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -277,19 +324,19 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">1:00 PM–1:50 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T13:00:00" data-end="2026-10-13T13:50:00">1:00 PM–1:50 PM</p>
               <div class="session-grid">
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="activity-pill ml-1" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="block font-bold" style="color:#17231d;font-size:20px;">What Is NASSCO PACP All About?</span><span class="mt-1 block" style="color:#5d675f;">Bryan Ballard · 4th Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">An explanation of NASSCO, its mission, and the development of the Pipeline Assessment Certification Program. The session will address PACP training, inspection purposes, how PACP data is used, and who may benefit from obtaining certification.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Capital Improvement Planning for Small Systems</span><span class="mt-1 block" style="color:#5d675f;">A.J. Barney · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">An introduction to capital improvement planning for small utility systems. Attendees will learn the basic components of a capital improvement plan and practical tools that can be used to begin developing one.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Principles and Practices of Tracer Wire: Completing the System</span><span class="mt-1 block" style="color:#5d675f;">Andrew Moseley · 2nd Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Learn the fundamentals of proper tracer wire installation and maintenance. This demonstration covers common installation mistakes, industry best practices, and how proper grounding and access points improve locate accuracy and help prevent utility damage.</p></div>
@@ -297,24 +344,24 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">2:00 PM–2:50 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T14:00:00" data-end="2026-10-13T14:50:00">2:00 PM–2:50 PM</p>
               <div class="session-grid">
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:#000;color:#fff;">Vendor Demo</span><span class="block"><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="activity-pill ml-1" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="activity-pill ml-1" style="background:rgb(239,108,34);color:#fff;">FO</span></span><span class="block font-bold" style="color:#17231d;font-size:20px;">CIPP Demonstration</span><span class="mt-1 block" style="color:#5d675f;">Vortex · Vendor Hall</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">A live demonstration of cured-in-place pipe rehabilitation technology, equipment, and installation practices.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:#000;color:#fff;">Vendor Demo</span><span class="block"><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="activity-pill ml-1" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="activity-pill ml-1" style="background:rgb(239,108,34);color:#fff;">FO</span></span><span class="block font-bold" style="color:#17231d;font-size:20px;">Hydro Excavation Demonstration</span><span class="mt-1 block" style="color:#5d675f;">RCH · Vendor Hall</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">A live demonstration of hydro excavation equipment, applications, and safe excavation practices.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Get the F.R.O.G. Out</span><span class="mt-1 block" style="color:#5d675f;">Drew Raffensperger · 4th Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Learn about the most common types of root intrusion and grease buildup that impact sanitary sewer systems. This session will explain how these problems develop, the operational challenges they create, and practical strategies for prevention, maintenance, and long-term control.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="activity-pill ml-1" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Bringing Industry 4.0 to Water Plants SCADA</span><span class="mt-1 block" style="color:#5d675f;">Steve Montgomery · 2nd Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">A discussion of modern SCADA technology, automation, connectivity, real-time monitoring, and Industry 4.0 applications for water and wastewater facilities.</p></div>
@@ -322,7 +369,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">3:00 PM–3:50 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T15:00:00" data-end="2026-10-13T15:50:00">3:00 PM–3:50 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">OMAG Documentation</span><span class="mt-1 block" style="color:#5d675f;">Leslie Noriega and Sean McKelvey · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -332,7 +379,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">3:50 PM–4:15 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T15:50:00" data-end="2026-10-13T16:15:00">3:50 PM–4:15 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="block font-bold" style="color:#17231d;font-size:20px;">Closing Remarks and Raffle Prize Announcements</span><span class="mt-1 block" style="color:#5d675f;">1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -342,7 +389,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">6:00 PM–9:00 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-13T18:00:00" data-end="2026-10-13T21:00:00">6:00 PM–9:00 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Networking / Special Event</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Casino Night Sponsored By RCH</span><span class="mt-1 block" style="color:#5d675f;">Stride Bank Center - Vendor hall</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -360,7 +407,7 @@
           </header>
           <div class="agenda-list">
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">7:00 AM–8:00 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T07:00:00" data-end="2026-10-14T08:00:00">7:00 AM–8:00 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="block font-bold" style="color:#17231d;font-size:20px;">Registration / Vendor Hall Open</span><span class="mt-1 block" style="color:#5d675f;">Stride Bank Center Lobby - Vendor Hall</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -370,9 +417,9 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">7:00 AM–8:00 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T07:00:00" data-end="2026-10-14T08:00:00">7:00 AM–8:00 AM</p>
               <div class="session-grid">
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Breakfast / Leadership Networking</span><span class="activity-pill ml-1" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="block font-bold" style="color:#17231d;font-size:20px;">City Manager and Public Works Director Breakfast</span><span class="mt-1 block" style="color:#5d675f;">William Sheppard, Hunter Askew, and Sean McKelvey · 4th Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Join public works directors, city managers, administrators, and other municipal leaders for a networking breakfast focused on emerging trends, shared challenges, and innovative ideas. Connect with peers, exchange best practices, and discover strategies to help Oklahoma cities and towns succeed.</p></div>
@@ -380,7 +427,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">8:00 AM–8:15 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T08:00:00" data-end="2026-10-14T08:15:00">8:00 AM–8:15 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Welcome and Morning Announcements</span><span class="mt-1 block" style="color:#5d675f;">Hunter Askew · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -390,7 +437,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">8:15 AM–9:10 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T08:15:00" data-end="2026-10-14T09:10:00">8:15 AM–9:10 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">OMAG CCTV</span><span class="mt-1 block" style="color:#5d675f;">William Sheppard and Hunter Askew · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -400,19 +447,19 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">9:20 AM–10:10 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T09:20:00" data-end="2026-10-14T10:10:00">9:20 AM–10:10 AM</p>
               <div class="session-grid">
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Building Stronger Communities Through Education, Standards, and Partnership</span><span class="mt-1 block" style="color:#5d675f;">Brian Smith, PhD · 2nd Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Join Brian Smith, PhD, as he introduces the United States Fat, Oil and Grease Alliance (USFOGA) and its mission to strengthen collaboration between municipalities, facility operators, and service providers through education, professional standards, and industry best practices. Attendees will gain practical insights into emerging FOG management challenges, opportunities for stronger public-private partnerships, and the resources USFOGA is developing to help communities improve compliance, reduce risk, and enhance operational performance.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="activity-pill ml-1" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Next-Generation Public Works Is Powered by ArcGIS</span><span class="mt-1 block" style="color:#5d675f;">Greg Hakman · 4th Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">This session explores how GIS can help public works organizations modernize operations, improve decision-making, and respond to aging infrastructure, funding, resilience, and service-delivery challenges. Case studies will show how ArcGIS integrates AI, real-time data, drones, IoT, and digital twins.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">I am thinking: Record keeping for the future, your successor will thank you</span><span class="mt-1 block" style="color:#5d675f;">Curtis Richards · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Presentation title and description will be added when confirmed.</p></div>
@@ -420,7 +467,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">10:10 AM–10:40 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T10:10:00" data-end="2026-10-14T10:40:00">10:10 AM–10:40 AM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(120,169,67);color:#fff;">Vendor Break</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Vendor Hall Break</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -430,19 +477,19 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">10:40 AM–11:30 AM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T10:40:00" data-end="2026-10-14T11:30:00">10:40 AM–11:30 AM</p>
               <div class="session-grid">
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="activity-pill ml-1" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="block font-bold" style="color:#17231d;font-size:20px;">The Trouble with Troubleshooting and Predictive Maintenance: Don't Get Caught Without It</span><span class="mt-1 block" style="color:#5d675f;">John Curry · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">A discussion of best management practices for predictive maintenance and how storing operational information in a historian can assist with troubleshooting and tort claim issues.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Using SCADA to Improve Monitoring and Management of Water and Wastewater Systems</span><span class="mt-1 block" style="color:#5d675f;">Blair Girard · 2nd Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Discover how SCADA can improve utility operations through better monitoring, instrumentation, and decision-making. This session covers system capabilities, implementation considerations, costs, common pitfalls, and emerging technologies that are shaping the future of utility management.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Air Valves</span><span class="mt-1 block" style="color:#5d675f;">Andrew Moseley · 4th Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Learn why air valves are critical to the performance and reliability of force mains and lift stations. This session covers proper operation, routine maintenance, common issues, and practical strategies to improve pumping efficiency and extend system life.</p></div>
@@ -450,7 +497,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">11:30 AM–12:30 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T11:30:00" data-end="2026-10-14T12:30:00">11:30 AM–12:30 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(120,169,67);color:#fff;">Lunch / Awards</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Lunch in the Vendor Hall</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -460,7 +507,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">12:30 PM–1:00 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T12:30:00" data-end="2026-10-14T13:00:00">12:30 PM–1:00 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(120,169,67);color:#fff;">Vendor Break</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Vendor Hall Break</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -470,21 +517,21 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">1:00 PM–1:50 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T13:00:00" data-end="2026-10-14T13:50:00">1:00 PM–1:50 PM</p>
               <div class="session-grid">
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">United Point Repair™: Advancing Sectional Sewer Rehabilitation with Engineered Composite Repairs</span><span class="mt-1 block" style="color:#5d675f;">Sean Fuller · 2nd Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">An overview of an internally installed composite repair solution engineered to permanently restore structurally compromised pipe segments while minimizing disruption to surrounding communities.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Build a Better Manhole Chimney</span><span class="mt-1 block" style="color:#5d675f;">Jason Jones · 4th Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">A discussion of lightweight, watertight, non-corrosive, traffic-rated composite manhole covers, HDPE grade rings, and Sentry vents designed to provide ventilation while reducing inflow.</p></div>
                 </details>
                 <!-- FIX: this session previously shared the "wed-cipp-*" template ID with the "Long Term
                      Planning" session at 1:00 PM — a duplicate-ID bug. Now uniquely scoped. -->
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Long Term Planning</span><span class="mt-1 block" style="color:#5d675f;">Jeremy McBride · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Discover the Choctaw Nation's new Oka Vlhpisa Asset Management Tool, designed to help rural utilities improve asset tracking, maintenance planning, infrastructure management, and long-term capital planning.</p></div>
@@ -497,19 +544,19 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">2:00 PM–2:50 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T14:00:00" data-end="2026-10-14T14:50:00">2:00 PM–2:50 PM</p>
               <div class="session-grid">
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="activity-pill ml-1" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Identifying Practical, Scalable Solutions to Maximize the Long-Term Value of Limited Resources</span><span class="mt-1 block" style="color:#5d675f;">David Jett · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Learn how the City of Tulsa combines modern technologies with proven maintenance practices to address aging sanitary sewer infrastructure. The session will also explain how smaller municipalities can adapt these strategies to their own systems and budgets.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="ML UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(81,112,255);color:#fff;">ML</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Investing in A Clean Water Future: Leveraging the CWSRF for Nature-Based Solutions</span><span class="mt-1 block" style="color:#5d675f;">Emerson O'Donnell · 2nd Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">This presentation will introduce nature-based solutions and green infrastructure as strategies to provide wastewater services, and highlight the Clean Water State Revolving Fund (CWSRF) as an affordable financing option for these approaches. We will cover why debt-financing major infrastructure investments is appropriate, and include information on how nature-based solutions are incentivized through the CWSRF.</p></div>
                 </details>
-                <details class="session-card"><summary>
+                <details class="session-card" data-tracks="FO UM"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(239,108,34);color:#fff;">FO</span><span class="activity-pill ml-1" style="background:rgb(0,191,99);color:#fff;">UM</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Stopping Roots Before They Stop the System: A Modern Approach to Sewer Infrastructure Protection</span><span class="mt-1 block" style="color:#5d675f;">Brian Conroy · 4th Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
                 </summary>
                   <div class="session-detail"><p class="leading-relaxed" style="color:#5d675f;">Learn how proactive chemical root control can reduce root intrusion, sanitary sewer overflows, maintenance costs, and infrastructure deterioration. This session explains why roots return after mechanical cutting and how preventative treatment programs provide longer-lasting results.</p></div>
@@ -517,7 +564,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">3:00 PM–3:50 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T15:00:00" data-end="2026-10-14T15:50:00">3:00 PM–3:50 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">OMAG Response</span><span class="mt-1 block" style="color:#5d675f;">William Sheppard and Brian · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -537,7 +584,7 @@
               </div>
             </div>
             <div class="time-group">
-              <p class="time-label font-bold" style="color:#17231d;font-size:20px;">3:50 PM–4:30 PM</p>
+              <p class="time-label font-bold" style="color:#17231d;font-size:20px;" data-start="2026-10-14T15:50:00" data-end="2026-10-14T16:30:00">3:50 PM–4:30 PM</p>
               <div class="session-grid">
                 <details class="session-card"><summary>
                   <div class="flex items-start justify-between gap-4"><span><span class="activity-pill" style="background:rgb(255,49,49);color:#fff;">Priority Session</span><span class="block font-bold" style="color:#17231d;font-size:20px;">Closing Remarks / Raffle Prizes</span><span class="mt-1 block" style="color:#5d675f;">OMAG · 1st Floor</span></span><i data-lucide="chevron-down" class="chevron mt-2 h-5 w-5"></i></div>
@@ -579,11 +626,8 @@
 
     tabs.forEach(tab => paintTab(tab, tab.getAttribute("aria-selected") === "true"));
 
-    // Auto-select the relevant day based on today's date:
-    // - Before Oct 12, 2026: defaults to Monday (already the markup default, set above)
-    // - Oct 12 / 13 / 14, 2026: jumps straight to that day's panel
-    // - After Oct 14, 2026 (event over): falls back to Wednesday, the final day
-    function pickDefaultDayId() {
+    // --- Default day: URL hash wins if present (#monday/#tuesday/#wednesday), otherwise today's date ---
+    function pickDateBasedDayId() {
       const today = new Date();
       const y = today.getFullYear(), m = today.getMonth(), d = today.getDate();
       const asNum = y * 10000 + (m + 1) * 100 + d; // e.g. 20261013
@@ -594,10 +638,16 @@
       return "wednesday-tab"; // after the event has ended
     }
 
-    const defaultTab = document.getElementById(pickDefaultDayId());
-    if (defaultTab) selectDay(defaultTab);
+    function dayIdFromHash() {
+      const h = window.location.hash.replace("#", "").toLowerCase();
+      if (["monday", "tuesday", "wednesday"].includes(h)) return h + "-tab";
+      return null;
+    }
 
-    function selectDay(selectedTab) {
+    let suppressHashUpdate = false;
+
+    function selectDay(selectedTab, opts) {
+      opts = opts || {};
       tabs.forEach(tab => {
         const selected = tab === selectedTab;
         tab.setAttribute("aria-selected", String(selected));
@@ -606,7 +656,25 @@
         panels[tab.id].classList.toggle("hidden", !selected);
       });
       status.textContent = names[selectedTab.id] + " schedule displayed";
+      if (!opts.skipHash) {
+        suppressHashUpdate = true;
+        const dayName = selectedTab.id.replace("-tab", "");
+        history.replaceState(null, "", "#" + dayName);
+        setTimeout(() => { suppressHashUpdate = false; }, 0);
+      }
+      refreshFilters();
     }
+
+    const initialId = dayIdFromHash() || pickDateBasedDayId();
+    const initialTab = document.getElementById(initialId);
+    if (initialTab) selectDay(initialTab, { skipHash: true });
+
+    window.addEventListener("hashchange", () => {
+      if (suppressHashUpdate) return;
+      const id = dayIdFromHash();
+      const tab = id && document.getElementById(id);
+      if (tab) selectDay(tab, { skipHash: true });
+    });
 
     tabs.forEach((tab, index) => {
       tab.addEventListener("click", () => selectDay(tab));
@@ -623,6 +691,130 @@
       });
     });
 
+    // --- Sticky nav shadow once it's actually stuck to the top ---
+    const nav = document.querySelector(".day-navigation");
+    const sentinel = document.getElementById("nav-sentinel");
+    if (nav && sentinel && "IntersectionObserver" in window) {
+      new IntersectionObserver(
+        entries => entries.forEach(e => nav.classList.toggle("is-stuck", !e.isIntersecting)),
+        { threshold: 0 }
+      ).observe(sentinel);
+    }
+
+    // --- Happening-now highlight ---
+    function updateHappeningNow() {
+      const now = new Date();
+      document.querySelectorAll(".time-label[data-start]").forEach(label => {
+        const start = new Date(label.dataset.start);
+        const end = new Date(label.dataset.end);
+        const group = label.closest(".time-group");
+        const isNow = now >= start && now <= end;
+        group.classList.toggle("is-now", isNow);
+        let badge = label.querySelector(".live-now-badge");
+        if (isNow && !badge) {
+          badge = document.createElement("span");
+          badge.className = "live-now-badge";
+          badge.textContent = "Happening now";
+          label.appendChild(badge);
+        } else if (!isNow && badge) {
+          badge.remove();
+        }
+      });
+    }
+    updateHappeningNow();
+    setInterval(updateHappeningNow, 60000);
+
+    // --- Track filter chips ---
+    const filterChips = [...document.querySelectorAll(".track-chip")];
+    let activeTrack = "all";
+
+    function refreshFilters() {
+      document.querySelectorAll(".session-card").forEach(card => {
+        const tracks = (card.dataset.tracks || "").split(" ").filter(Boolean);
+        const show = activeTrack === "all" || tracks.length === 0 || tracks.includes(activeTrack);
+        card.classList.toggle("is-filtered-out", !show);
+      });
+      document.querySelectorAll(".time-group").forEach(group => {
+        const cards = [...group.querySelectorAll(".session-card")];
+        const allHidden = cards.length > 0 && cards.every(c => c.classList.contains("is-filtered-out"));
+        group.style.display = allHidden ? "none" : "";
+      });
+    }
+
+    filterChips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        activeTrack = chip.dataset.track;
+        filterChips.forEach(c => c.setAttribute("aria-pressed", String(c === chip)));
+        refreshFilters();
+      });
+    });
+
+    // --- Expand all / collapse all (applies to the currently visible day) ---
+    function toggleAllInVisibleDay(open) {
+      const visiblePanel = document.querySelector(".day-panel:not(.hidden)");
+      if (!visiblePanel) return;
+      visiblePanel.querySelectorAll("details.session-card").forEach(d => { d.open = open; });
+    }
+    document.getElementById("expand-all-btn").addEventListener("click", () => toggleAllInVisibleDay(true));
+    document.getElementById("collapse-all-btn").addEventListener("click", () => toggleAllInVisibleDay(false));
+
+    // --- Add-to-calendar (.ics) buttons on every session card ---
+    function pad(n) { return String(n).padStart(2, "0"); }
+    function toIcsStamp(dateObj) {
+      return dateObj.getFullYear() + pad(dateObj.getMonth() + 1) + pad(dateObj.getDate()) + "T" +
+             pad(dateObj.getHours()) + pad(dateObj.getMinutes()) + "00";
+    }
+    function escapeIcsText(str) {
+      return (str || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+    }
+
+    document.querySelectorAll(".session-card").forEach(card => {
+      const label = card.closest(".time-group") && card.closest(".time-group").querySelector(".time-label[data-start]");
+      if (!label) return; // no machine-readable time on this group, skip
+
+      const titleEl = card.querySelector("summary .font-bold.block, summary .block.font-bold");
+      const metaEl = card.querySelector("summary .mt-1.block");
+      const descEl = card.querySelector(".session-detail p");
+      const title = titleEl ? titleEl.textContent.trim() : "Session";
+      const meta = metaEl ? metaEl.textContent.trim() : "";
+      const desc = descEl ? descEl.textContent.trim() : "";
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "ics-btn";
+      btn.innerHTML = '<i data-lucide="calendar-plus" class="h-3.5 w-3.5"></i><span>Add to calendar</span>';
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        const start = new Date(label.dataset.start);
+        const end = new Date(label.dataset.end);
+        const ics = [
+          "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//OMAG Sewer Expo//Agenda//EN",
+          "BEGIN:VEVENT",
+          "UID:" + Math.random().toString(36).slice(2) + "@omag-sewer-expo",
+          "DTSTAMP:" + toIcsStamp(new Date()),
+          "DTSTART:" + toIcsStamp(start),
+          "DTEND:" + toIcsStamp(end),
+          "SUMMARY:" + escapeIcsText(title),
+          "LOCATION:" + escapeIcsText(meta),
+          "DESCRIPTION:" + escapeIcsText(desc),
+          "END:VEVENT", "END:VCALENDAR"
+        ].join("\r\n");
+        const blob = new Blob([ics], { type: "text/calendar" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = title.replace(/[^a-z0-9]+/gi, "-").slice(0, 60) + ".ics";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+
+      const detail = card.querySelector(".session-detail");
+      if (detail) detail.appendChild(btn);
+    });
+
+    refreshFilters();
     lucide.createIcons();
   });
   </script>
